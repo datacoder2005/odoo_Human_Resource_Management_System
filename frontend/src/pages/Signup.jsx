@@ -46,9 +46,9 @@ const Signup = () => {
     setLoading(true);
     try {
       const res = await registerUser(formData);
-      const { token, user } = res.data;
+      const { token, data: { user } } = res.data;
       login(user, token);
-      toast.success(`Account created! Welcome, ${user.name}!`);
+      toast.success(`Account created! Welcome, ${user.fullName || user.name || 'User'}!`);
       navigate('/dashboard');
     } catch (err) {
       const msg = err.response?.data?.message || 'Registration failed. Please try again.';

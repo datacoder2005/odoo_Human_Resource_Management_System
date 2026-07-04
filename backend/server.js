@@ -20,6 +20,7 @@ app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:5173',
   credentials: true,
 }));
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -33,33 +34,38 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// ── Mount Routes ───────────────────────────────────────────────────────────────
+// ==================== API Routes ====================
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/payroll', payrollRoutes);
 app.use('/api/attendance', attendanceRoutes);
 
-// Dev-only seed route
+// Development-only seed route
 if (process.env.NODE_ENV !== 'production') {
   app.use('/api/seed', seedRoutes);
 }
 
-// 404 Handler
+// ==================== 404 Handler ====================
 app.use((req, res) => {
-  res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found` });
+  res.status(404).json({
+    success: false,
+    message: `Route ${req.originalUrl} not found`,
+  });
 });
 
-// Global Error Handler
+// ==================== Global Error Handler ====================
 app.use((err, req, res, next) => {
   console.error('Unhandled Error:', err.stack || err);
+
   res.status(err.status || err.statusCode || 500).json({
     success: false,
     message: err.message || 'Internal Server Error',
   });
 });
 
-// Start Server
+// ==================== Start Server ====================
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
   console.log(`🚀 HRMS API running on http://localhost:${PORT}`);
   console.log(`📦 Environment: ${process.env.NODE_ENV || 'development'}`);

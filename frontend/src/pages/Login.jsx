@@ -30,9 +30,9 @@ const Login = () => {
     setLoading(true);
     try {
       const res = await loginUser(formData);
-      const { token, user } = res.data;
+      const { token, data: { user } } = res.data;
       login(user, token);
-      toast.success(`Welcome back, ${user.name}!`);
+      toast.success(`Welcome back, ${user.fullName || user.name || 'User'}!`);
       navigate('/dashboard');
     } catch (err) {
       const msg = err.response?.data?.message || 'Login failed. Please try again.';
