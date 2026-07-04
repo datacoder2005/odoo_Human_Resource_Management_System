@@ -5,7 +5,8 @@ const connectDB = require('./config/db');
 
 // ── Import Routes ──────────────────────────────────────────────────────────────
 const authRoutes = require('./routes/authRoutes');
-// NOTE: Other module routes (attendance, leave, payroll, etc.) should be
+const attendanceRoutes = require('./routes/attendanceRoutes');
+// NOTE: Other module routes (leave, payroll, etc.) should be
 // imported and mounted here by respective teammates. Do NOT modify above routes.
 
 const app = express();
@@ -31,8 +32,9 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// ── Mount Auth Routes ──────────────────────────────────────────────────────────
+// ── Mount Routes ───────────────────────────────────────────────────────────────
 app.use('/api/auth', authRoutes);
+app.use('/api/attendance', attendanceRoutes);
 
 // ── 404 Handler ────────────────────────────────────────────────────────────────
 app.use((req, res) => {
