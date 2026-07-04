@@ -1,0 +1,243 @@
+/* Profile Page Layout */
+.profile-page-new {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header Section */
+.profile-header-new {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 24px;
+}
+
+.profile-header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.profile-avatar-large {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: white;
+  font-weight: 700;
+}
+.profile-avatar-large img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-header-mid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.profile-header-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-strong);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+.profile-info-grid-new {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 8px 16px;
+  align-items: center;
+}
+.profile-info-label-new {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.profile-info-val-new {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.profile-header-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-left: 1px solid var(--border);
+  padding-left: 40px;
+}
+
+/* Tabs */
+.profile-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.profile-tab {
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.profile-tab:hover {
+  background: var(--surface-2);
+  color: var(--text-primary);
+}
+.profile-tab.active {
+  background: var(--surface-1);
+  color: var(--accent-hover);
+  border-color: var(--border);
+  border-bottom-color: var(--surface-1);
+  margin-bottom: -1px;
+}
+
+/* Tab Content */
+.profile-tab-content {
+  background: transparent;
+}
+
+/* Salary Info Grid */
+.salary-info-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.salary-header-item {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+}
+.salary-header-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  width: 180px;
+}
+.salary-header-input-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex: 1;
+}
+.salary-header-input {
+  background: var(--bg-base);
+  border: none;
+  border-bottom: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 600;
+  padding: 4px 8px;
+  width: 100%;
+}
+.salary-header-input:focus {
+  border-bottom-color: var(--accent);
+}
+.salary-header-unit {
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.salary-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+}
+.salary-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+.salary-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+.salary-col-desc {
+  flex: 1;
+  padding-right: 20px;
+}
+.salary-comp-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.salary-comp-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.salary-col-inputs {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 240px;
+}
+.salary-input-group {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.salary-calc-amt {
+  width: 100px;
+  background: var(--bg-base);
+  border: none;
+  border-bottom: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 0;
+  text-align: right;
+}
+.salary-calc-pct {
+  width: 60px;
+  background: var(--bg-base);
+  border: none;
+  border-bottom: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 0;
+  text-align: right;
+}
+.salary-calc-amt:focus, .salary-calc-pct:focus {
+  border-bottom-color: var(--accent);
+}
+
+.salary-unit {
+  color: var(--text-secondary);
+  font-size: 12px;
+}

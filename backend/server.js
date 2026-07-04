@@ -3,17 +3,18 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 
-// ── Import Routes ──────────────────────────────────────────────────────────────
+// Route imports
 const authRoutes = require('./routes/authRoutes');
-// NOTE: Other module routes (attendance, leave, payroll, etc.) should be
-// imported and mounted here by respective teammates. Do NOT modify above routes.
+const userRoutes = require('./routes/userRoutes');
+const payrollRoutes = require('./routes/payrollRoutes');
+const seedRoutes = require('./routes/seedRoutes');
 
 const app = express();
 
-// ── Connect to MongoDB ─────────────────────────────────────────────────────────
+// Connect to MongoDB
 connectDB();
 
-// ── Middlewares ────────────────────────────────────────────────────────────────
+// Middlewares
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:5173',
   credentials: true,
@@ -21,37 +22,45 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// ── Health Check ───────────────────────────────────────────────────────────────
+// Health Check
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     success: true,
-    message: 'HRMS API is running',
+    message: 'HRMS API is running 🚀',
     environment: process.env.NODE_ENV,
     timestamp: new Date().toISOString(),
   });
 });
 
-// ── Mount Auth Routes ──────────────────────────────────────────────────────────
+// Mount Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/payroll', payrollRoutes);
 
-// ── 404 Handler ────────────────────────────────────────────────────────────────
+// Dev-only seed route
+if (process.env.NODE_ENV !== 'production') {
+  app.use('/api/seed', seedRoutes);
+}
+
+// 404 Handler
 app.use((req, res) => {
   res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found` });
 });
 
-// ── Global Error Handler ───────────────────────────────────────────────────────
+// Global Error Handler
 app.use((err, req, res, next) => {
-  console.error('Unhandled Error:', err.stack);
-  res.status(err.status || 500).json({
+  console.error('Unhandled Error:', err.stack || err);
+  res.status(err.status || err.statusCode || 500).json({
     success: false,
     message: err.message || 'Internal Server Error',
   });
 });
 
-// ── Start Server ───────────────────────────────────────────────────────────────
+// Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 HRMS Server running on port ${PORT} [${process.env.NODE_ENV || 'development'}]`);
+  console.log(`🚀 HRMS API running on http://localhost:${PORT}`);
+  console.log(`📦 Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 
 module.exports = app;
