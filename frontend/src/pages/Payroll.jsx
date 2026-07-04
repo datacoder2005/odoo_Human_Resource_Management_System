@@ -90,7 +90,7 @@ const PayrollModal = ({ initial, employeeId, users, onClose, onSaved }) => {
                 <option value="">Select employee...</option>
                 {users.map((u) => (
                   <option key={u._id} value={u._id}>
-                    {u.name} ({u.employeeId})
+                    {u.fullName || u.name} ({u.employeeLoginId || u.employeeId})
                   </option>
                 ))}
               </select>
@@ -227,7 +227,7 @@ const Payroll = () => {
         }
         // Load all users for the selector
         const usersRes = await getAllUsers();
-        setAllUsers(usersRes.data.users.filter((u) => u.role === 'Employee'));
+        setAllUsers(usersRes.data.users);
       } else {
         const res = await getMyPayroll();
         setPayrollList(res.data.payroll);
@@ -281,7 +281,7 @@ const Payroll = () => {
               <option value="">All Employees</option>
               {allUsers.map((u) => (
                 <option key={u._id} value={u._id}>
-                  {u.name} ({u.employeeId})
+                  {u.fullName || u.name} ({u.employeeLoginId || u.employeeId})
                 </option>
               ))}
             </select>
@@ -304,11 +304,11 @@ const Payroll = () => {
           background: 'var(--surface-1)', border: '1px solid var(--border)',
           borderRadius: 'var(--radius-lg)', padding: '16px 20px', marginBottom: 20,
         }}>
-          <Avatar src={targetUser.avatar} name={targetUser.name} size="md" />
+          <Avatar src={targetUser.avatar} name={targetUser.fullName || targetUser.name} size="md" />
           <div>
-            <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{targetUser.name}</div>
+            <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{targetUser.fullName || targetUser.name}</div>
             <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>
-              {targetUser.employeeId} · {targetUser.email}
+              {targetUser.employeeLoginId || targetUser.employeeId} · {targetUser.email}
             </div>
           </div>
         </div>
@@ -407,15 +407,15 @@ const Payroll = () => {
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                               <Avatar
                                 src={record.userId?.avatar}
-                                name={record.userId?.name || '?'}
+                                name={record.userId?.fullName || record.userId?.name || '?'}
                                 size="xs"
                               />
                               <div>
                                 <div style={{ fontWeight: 500, fontSize: 13 }}>
-                                  {record.userId?.name}
+                                  {record.userId?.fullName || record.userId?.name}
                                 </div>
                                 <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                                  {record.userId?.employeeId}
+                                  {record.userId?.employeeLoginId || record.userId?.employeeId}
                                 </div>
                               </div>
                             </div>

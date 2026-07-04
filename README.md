@@ -1,146 +1,79 @@
-# HRMS — Human Resource Management System
+# Advanced Human Resource Management System (HRMS)
 
-A full-stack HRMS web application built with React + Vite, Node.js + Express, and MongoDB Atlas.
+A full-stack Human Resource Management System built with the MERN stack (MongoDB, Express, React, Node.js). This system is designed to streamline HR processes, including employee attendance tracking, leave management, payroll processing, and employee profile administration.
 
----
+## Features
 
-## Tech Stack
+*   **Role-Based Access Control:** Distinct dashboards and permissions for Employees and HR/Admins.
+*   **Attendance Tracking:** Employees can clock in/out daily. Automated calculation of working hours and extra hours. Admins have a bird's eye view of all employee attendance.
+*   **Leave & Time-off Management:** Employees can apply for sick, casual, annual, or unpaid leave. Admins can review, approve, or reject leave requests.
+*   **Payroll Processing:** Automated salary slip generation based on base salary, working days, deductions, and bonuses.
+*   **Employee Profiles:** Detailed profiles containing employee information, designation, and department details.
+*   **Beautiful UI:** A modern, fully responsive dashboard built with React and custom CSS styling.
 
-| Layer | Technology |
-|---|---|
-| Frontend | React 18, Vite, React Router v6, CSS (custom design system) |
-| Backend | Node.js, Express 4, JWT, bcryptjs, express-validator |
-| Database | MongoDB Atlas via Mongoose |
-| Notifications | react-hot-toast |
-| Icons | lucide-react |
+## Technology Stack
 
----
+*   **Frontend:** React.js, Vite, React Router DOM, React Hot Toast (for notifications), Lucide React (for icons)
+*   **Backend:** Node.js, Express.js, Mongoose (MongoDB ODM)
+*   **Authentication:** JSON Web Tokens (JWT) & bcrypt for password hashing
+
+## Getting Started
+
+### Prerequisites
+
+*   Node.js (v16 or higher)
+*   MongoDB (Local instance or MongoDB Atlas cluster)
+
+### Installation
+
+1.  **Clone the repository**
+2.  **Install Backend Dependencies**
+    ```bash
+    cd backend
+    npm install
+    ```
+3.  **Install Frontend Dependencies**
+    ```bash
+    cd frontend
+    npm install
+    ```
+
+### Environment Variables
+
+Create a `.env` file in the `backend` directory and add the following variables:
+
+```env
+PORT=8000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+JWT_EXPIRES_IN=7d
+CLIENT_URL=http://localhost:5173
+```
+
+### Running the Application
+
+1.  **Start the Backend Server**
+    ```bash
+    cd backend
+    npm run dev
+    ```
+2.  **Start the Frontend Development Server**
+    ```bash
+    cd frontend
+    npm run dev
+    ```
+
+The frontend will run on `http://localhost:5173` and the backend API will run on `http://localhost:8000`.
 
 ## Project Structure
 
-```
-hrms/
-├── backend/
-│   ├── config/db.js              # MongoDB connection
-│   ├── controllers/
-│   │   ├── authController.js     # register + login
-│   │   ├── userController.js     # CRUD for users/profiles
-│   │   └── payrollController.js  # payroll CRUD
-│   ├── middleware/authMiddleware.js  # protect + adminOnly
-│   ├── models/
-│   │   ├── userModel.js
-│   │   ├── profileModel.js
-│   │   ├── payrollModel.js
-│   │   └── attendanceModel.js    # stub
-│   ├── routes/
-│   │   ├── authRoutes.js
-│   │   ├── userRoutes.js
-│   │   ├── payrollRoutes.js
-│   │   └── seedRoutes.js         # dev only
-│   ├── .env.example
-│   ├── package.json
-│   └── server.js
-│
-└── frontend/
-    ├── src/
-    │   ├── api/                   # axios + typed API wrappers
-    │   ├── components/
-    │   │   ├── layout/            # Sidebar, Navbar, DashboardLayout
-    │   │   └── ui/                # Avatar, Badge, LoadingSpinner, EmptyState
-    │   ├── context/AuthContext.jsx
-    │   ├── pages/
-    │   │   ├── Login.jsx
-    │   │   ├── Signup.jsx
-    │   │   ├── Dashboard.jsx
-    │   │   ├── Profile.jsx
-    │   │   ├── Payroll.jsx
-    │   │   ├── Attendance.jsx     # stub
-    │   │   └── Leave.jsx          # stub
-    │   ├── App.jsx
-    │   ├── index.css              # full design system
-    │   └── main.jsx
-    ├── index.html
-    ├── package.json
-    └── vite.config.js
-```
+*   `/backend`: Contains the Express server, Mongoose models, controllers, and API routes.
+*   `/frontend`: Contains the React application, UI components, and API integration logic.
 
----
+## Modules Overview
 
-## Setup Instructions
-
-### 1. Clone & navigate
-```bash
-git clone <repo-url>
-```
-
-### 2. Backend setup
-```bash
-cd backend
-cp .env.example .env
-# Edit .env and set your MONGO_URI and JWT_SECRET
-npm install
-npm run dev     # starts on http://localhost:5000
-```
-
-Your `.env` file:
-```env
-PORT=5000
-MONGO_URI=mongodb+srv://<user>:<pass>@cluster0.xxxxx.mongodb.net/hrms?retryWrites=true&w=majority
-JWT_SECRET=your_secret_key_here
-NODE_ENV=development
-```
-
-### 3. Frontend setup
-```bash
-cd frontend
-npm install
-npm run dev     # starts on http://localhost:5173
-```
-
-### 4. Seed demo data (optional but recommended)
-```bash
-# With the backend running, call:
-curl -X POST http://localhost:5000/api/seed
-
-# Or open in browser: POST via Postman/Insomnia
-```
-
-Demo credentials after seeding:
-| Role | Email | Password |
-|---|---|---|
-| Admin | admin@hrms.com | admin123 |
-| Employee | james@hrms.com | employee123 |
-| Employee | priya@hrms.com | employee123 |
-
----
-
-## API Endpoints
-
-### Auth
-| Method | Route | Description |
-|---|---|---|
-| POST | /api/auth/register | Register new user |
-| POST | /api/auth/login | Login + get JWT |
-
-### Users (Bearer token required)
-| Method | Route | Access |
-|---|---|---|
-| GET | /api/users/me | Self |
-| PUT | /api/users/me | Self (limited fields) |
-| GET | /api/users | Admin only |
-| GET | /api/users/:id | Admin only |
-| PUT | /api/users/:id | Admin only |
-
-### Payroll
-| Method | Route | Access |
-|---|---|---|
-| GET | /api/payroll/me | Self |
-| GET | /api/payroll | Admin only |
-| GET | /api/payroll/:userId | Admin only |
-| POST | /api/payroll | Admin only |
-| PUT | /api/payroll/:id | Admin only |
-
-### Dev only
-| Method | Route |
-|---|---|
-| POST | /api/seed |
+1.  **Dashboard:** High-level summary of employee statistics and recent activities.
+2.  **Profile:** Manage personal and professional details.
+3.  **Attendance:** Check-in/out functionality and historical attendance logs.
+4.  **Leave & Time-off:** Leave application form and approval workflow.
+5.  **Payroll:** Salary configuration and monthly payslip generation.
