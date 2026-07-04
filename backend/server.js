@@ -8,6 +8,7 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const payrollRoutes = require('./routes/payrollRoutes');
 const seedRoutes = require('./routes/seedRoutes');
+const attendanceRoutes = require('./routes/attendanceRoutes');
 
 const app = express();
 
@@ -32,10 +33,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Mount Routes
+// ── Mount Routes ───────────────────────────────────────────────────────────────
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/payroll', payrollRoutes);
+app.use('/api/attendance', attendanceRoutes);
 
 // Dev-only seed route
 if (process.env.NODE_ENV !== 'production') {

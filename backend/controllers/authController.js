@@ -152,7 +152,8 @@ const signup = async (req, res) => {
 // ─── @access Public
 const login = async (req, res) => {
   try {
-    const { identifier, password, rememberMe } = req.body;
+    const { password, rememberMe } = req.body;
+    const identifier = req.body.identifier || req.body.email;
 
     if (!identifier || !password) {
       return res.status(400).json({ success: false, message: 'Login ID/Email and password are required' });
