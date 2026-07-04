@@ -9,6 +9,7 @@ const userRoutes = require('./routes/userRoutes');
 const payrollRoutes = require('./routes/payrollRoutes');
 const seedRoutes = require('./routes/seedRoutes');
 const attendanceRoutes = require('./routes/attendanceRoutes');
+const leaveRoutes = require('./routes/leaveRoutes');
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/payroll', payrollRoutes);
 app.use('/api/attendance', attendanceRoutes);
+app.use('/api/leave', leaveRoutes);
 
 // Development-only seed route
 if (process.env.NODE_ENV !== 'production') {

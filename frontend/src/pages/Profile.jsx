@@ -73,7 +73,7 @@ const Profile = () => {
 
   const startEdit = () => {
     setForm({
-      name: userData?.name || '',
+      name: userData?.fullName || userData?.name || '',
       email: userData?.email || '',
       role: userData?.role || 'Employee',
       avatar: userData?.avatar || '',
@@ -157,7 +157,7 @@ const Profile = () => {
   }
 
   const canEditAll = isAdmin;
-  const initial = userData.name ? userData.name.charAt(0).toUpperCase() : '?';
+  const initial = (userData.fullName || userData.name) ? (userData.fullName || userData.name).charAt(0).toUpperCase() : '?';
 
   // --- Salary Calculations ---
   const wage = parseFloat(salaryForm.monthlyWage) || 0;
@@ -192,7 +192,6 @@ const Profile = () => {
     <div className="salary-row">
       <div className="salary-col-desc">
         <div className="salary-comp-name">{label}</div>
-        <div className="salary-comp-note">{desc}</div>
       </div>
       <div className="salary-col-inputs">
         <div className="salary-input-group">
@@ -233,8 +232,8 @@ const Profile = () => {
         <div className="profile-header-new">
           <div className="profile-header-left">
             <div className="profile-avatar-large">
-              {userData.avatar ? (
-                <img src={userData.avatar} alt={userData.name} />
+              {userData.avatar || userData.logoUrl ? (
+                <img src={userData.avatar || userData.logoUrl} alt={userData.fullName || userData.name} />
               ) : (
                 initial
               )}
@@ -263,9 +262,9 @@ const Profile = () => {
           </div>
 
           <div className="profile-header-mid">
-            <div className="profile-header-name">{userData.name}</div>
+            <div className="profile-header-name">{userData.fullName || userData.name}</div>
             <div className="profile-info-grid-new">
-              <InfoRow label="Login ID" value={fmt(userData.employeeId)} />
+              <InfoRow label="Login ID" value={fmt(userData.employeeLoginId || userData.employeeId)} />
               <InfoRow label="Email" value={fmt(userData.email)} />
               <InfoRow label="Mobile" value={fmt(profile?.phone)} />
             </div>
@@ -315,7 +314,7 @@ const Profile = () => {
               {!editing ? (
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px 40px' }}>
                   <div className="profile-info-grid-new" style={{ gridTemplateColumns: '120px 1fr' }}>
-                    <InfoRow label="Full Name" value={fmt(userData.name)} />
+                    <InfoRow label="Full Name" value={fmt(userData.fullName || userData.name)} />
                     <InfoRow label="Email" value={fmt(userData.email)} />
                     <InfoRow label="Phone" value={fmt(profile?.phone)} />
                     <InfoRow label="Address" value={fmt(profile?.address)} />
@@ -323,7 +322,7 @@ const Profile = () => {
                   <div className="profile-info-grid-new" style={{ gridTemplateColumns: '120px 1fr' }}>
                     <InfoRow label="Department" value={fmt(profile?.department)} />
                     <InfoRow label="Designation" value={fmt(profile?.designation)} />
-                    <InfoRow label="Role" value={<Badge variant={userData.role === 'Admin' ? 'purple' : 'accent'} dot={false}>{userData.role}</Badge>} />
+                    <InfoRow label="Role" value={<Badge variant={userData.role?.toLowerCase() === 'admin' ? 'purple' : 'accent'} dot={false}>{userData.role}</Badge>} />
                     <InfoRow label="Joining Date" value={fmt(profile?.joiningDate ? new Date(profile.joiningDate).toLocaleDateString() : '')} />
                   </div>
                 </div>
@@ -336,9 +335,9 @@ const Profile = () => {
                       <div className="form-group"><label className="form-label">Department</label><input name="department" value={form.department} onChange={handleChange} className="form-input" /></div>
                       <div className="form-group"><label className="form-label">Designation</label><input name="designation" value={form.designation} onChange={handleChange} className="form-input" /></div>
                       <div className="form-group"><label className="form-label">Role</label>
-                        <select name="role" value={form.role} onChange={handleChange} className="form-input">
-                          <option value="Employee">Employee</option>
-                          <option value="Admin">Admin</option>
+                        <select name="role" value={form.role?.toLowerCase()} onChange={handleChange} className="form-input">
+                          <option value="employee">Employee</option>
+                          <option value="admin">Admin</option>
                         </select>
                       </div>
                       <div className="form-group"><label className="form-label">Company</label><input name="company" value={form.company} onChange={handleChange} className="form-input" /></div>
@@ -465,7 +464,6 @@ const Profile = () => {
                   <div className="salary-row">
                     <div className="salary-col-desc">
                       <div className="salary-comp-name">Professional Tax</div>
-                      <div className="salary-comp-note">Professional Tax deducted from the Gross salary</div>
                     </div>
                     <div className="salary-col-inputs">
                       <div className="salary-input-group">

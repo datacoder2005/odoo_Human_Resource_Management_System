@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Phone number is required'],
       trim: true,
-      match: [/^[6-9]\d{9}$/, 'Please enter a valid 10-digit Indian phone number'],
+      match: [/^\+?[0-9\s\-()]{7,15}$/, 'Please enter a valid phone number'],
     },
 
     // ── Security ──────────────────────────────────────────────────────────

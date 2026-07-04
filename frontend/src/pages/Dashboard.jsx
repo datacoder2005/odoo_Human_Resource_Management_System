@@ -31,9 +31,11 @@ const Dashboard = () => {
 
   const filteredUsers = allUsers.filter((u) => {
     const query = searchQuery.toLowerCase();
+    const name = u.fullName || u.name || '';
+    const empId = u.employeeLoginId || u.employeeId || '';
     return (
-      u.name.toLowerCase().includes(query) ||
-      u.employeeId.toLowerCase().includes(query)
+      name.toLowerCase().includes(query) ||
+      empId.toLowerCase().includes(query)
     );
   });
 
@@ -44,7 +46,7 @@ const Dashboard = () => {
         <div>
           <h1 className="section-title" style={{ fontSize: 24, marginBottom: 4 }}>Employee Directory</h1>
           <span className="section-subtitle">
-            Welcome back, {user?.name?.split(' ')[0]} 👋
+            Welcome back, {user?.fullName?.split(' ')[0] || 'User'} 👋
           </span>
         </div>
 
@@ -101,15 +103,15 @@ const Dashboard = () => {
                 <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--success)', boxShadow: '0 0 0 3px var(--success-light)' }} title="Active" />
               </div>
 
-              <Avatar src={emp.avatar} name={emp.name} size="lg" />
+              <Avatar src={emp.logoUrl || emp.avatar} name={emp.fullName || emp.name} size="lg" />
               
               <div style={{ marginTop: 16, textAlign: 'center' }}>
-                <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: 16 }}>{emp.name}</div>
-                <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>{emp.employeeId}</div>
+                <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: 16 }}>{emp.fullName || emp.name}</div>
+                <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>{emp.employeeLoginId || emp.employeeId}</div>
               </div>
               
               <div style={{ marginTop: 12 }}>
-                <Badge variant={emp.role === 'Admin' ? 'purple' : 'accent'} dot={false}>
+                <Badge variant={emp.role?.toLowerCase() === 'admin' ? 'purple' : 'accent'} dot={false}>
                   {emp.role}
                 </Badge>
               </div>

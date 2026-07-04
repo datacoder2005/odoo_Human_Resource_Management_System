@@ -133,7 +133,7 @@
 
 .salary-header-item {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 16px;
 }
 .salary-header-label {
@@ -181,7 +181,7 @@
 
 .salary-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 24px;
 }
 .salary-col-desc {

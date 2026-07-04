@@ -16,12 +16,16 @@ const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/profile', icon: User, label: 'My Profile' },
   { to: '/payroll', icon: DollarSign, label: 'Payroll' },
+  { to: '/attendance', icon: CalendarCheck, label: 'Attendance' },
+  { to: '/leave', icon: CalendarOff, label: 'Leave & Time-off' },
 ];
 
 const adminItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/profile', icon: Users, label: 'Employees' },
   { to: '/payroll', icon: DollarSign, label: 'Payroll' },
+  { to: '/attendance', icon: CalendarCheck, label: 'Attendance' },
+  { to: '/leave', icon: CalendarOff, label: 'Leave & Time-off' },
 ];
 
 const Sidebar = () => {
